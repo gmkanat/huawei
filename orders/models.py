@@ -15,6 +15,8 @@ class Order(TimeStampMixin, IsActiveMixin):
     )
     courier_center_id = models.ForeignKey(
         CourierCenter,
+        null=True,
+        blank=True,
         on_delete=models.CASCADE,
         verbose_name=_('Courier center'),
     )
@@ -115,6 +117,10 @@ class OTP(TimeStampMixin, IsActiveMixin):
     otp = models.CharField(
         max_length=255,
         verbose_name=_('OTP'),
+    )
+    is_verified_by_con = models.BooleanField(
+        default=False,
+        verbose_name=_('Is verified by con'),
     )
 
     class Meta:

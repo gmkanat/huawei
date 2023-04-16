@@ -49,7 +49,9 @@ def send_sms(phone, message):
         "phone": phone,
         "smsText": message
     }
+    print(payload)
     response = requests.post(url, json=payload, headers=headers)
+    print(response.json())
     return response.json()
 
 

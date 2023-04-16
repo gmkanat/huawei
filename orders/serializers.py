@@ -1,9 +1,32 @@
 from rest_framework import serializers
+
+from con.serializers import ConSerializer
+from courier.serializers import AddressSerializer
+from users.serializers import UserListSerializer
 from .models import Order
 from utils.models import Address
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = [
+            'id',
+            'request_id',
+            'courier_id',
+            'address_id',
+            'con_id',
+            'client_iin',
+            'taker_iin',
+            'status',
+        ]
+
+
+class OrderFullSerializer(serializers.ModelSerializer):
+    address_id = AddressSerializer()
+    courier_id = UserListSerializer()
+    con_id = ConSerializer()
+
     class Meta:
         model = Order
         fields = [
@@ -40,4 +63,3 @@ class OTPSerializer(serializers.Serializer):
         max_length=6,
         min_length=6,
     )
-

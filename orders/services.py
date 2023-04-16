@@ -16,9 +16,3 @@ def validate_order(pk, cur_status: str, courier_id: int = None):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-    if courier_id and order.courier_id != courier_id:
-        return Response(
-            {'error': 'Order is not assigned to you'},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-    return order

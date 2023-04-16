@@ -59,24 +59,3 @@ class CourierCourierCenter(TimeStampMixin, IsActiveMixin):
     def __str__(self):
         return self.id
 
-
-class OTP(TimeStampMixin, IsActiveMixin):
-    phone = models.CharField(
-        max_length=255,
-        verbose_name=_('Phone'),
-    )
-    otp = models.CharField(
-        max_length=255,
-        verbose_name=_('OTP'),
-    )
-    is_verified_by_con = models.BooleanField(
-        default=False,
-        verbose_name=_('Is verified by con'),
-    )
-
-    class Meta:
-        verbose_name = _('OTP')
-        verbose_name_plural = _('OTPs')
-
-    def __str__(self):
-        return self.id

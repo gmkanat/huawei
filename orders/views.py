@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAdminUser, AllowAny
 
 from courier.permission import IsCourier
-from orders.serializers import OrderSerializer, AddressSerializer, OTPSerializer
+from orders.serializers import OrderSerializer, AddressSerializer, OTPSerializer, OrderFullSerializer
 from orders.models import Order, OTP
 from users.models import User
 from utils.services import send_sms, generate_otp, get_phone
@@ -29,7 +29,9 @@ class OrderViewSet(viewsets.mixins.CreateModelMixin,
     permission_classes = [AllowAny, ]
 
     def get_serializer_class(self):
-        return OrderSerializer
+        if self.action == 'create':
+            return OrderSerializer
+        return OrderFullSerializer
 
     @extend_schema(
         parameters=[
@@ -59,8 +61,11 @@ class OrderViewSet(viewsets.mixins.CreateModelMixin,
 
     @action(detail=True, methods=['get'], permission_classes=[IsCourier, ])
     def assign_to_courier(self, request, pk=None):
-        courier_id = request.user.id
-        order = validate_order(pk, 'pending')
+        courier_id = request.user
+        response = validate_order(pk, 'pending')
+        if response:
+            return response
+        order = Order.objects.filter(id=pk).first()
         order.courier_id = courier_id
         order.status = 'in_progress'
         order.save()
