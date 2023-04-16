@@ -55,6 +55,12 @@ class Order(TimeStampMixin, IsActiveMixin):
         max_length=255,
         verbose_name=_('Status'),
     )
+    price = models.FloatField(
+        verbose_name=_('Price'),
+        null=True,
+        blank=True,
+        default=0,
+    )
 
     class Meta:
         verbose_name = _('Order')

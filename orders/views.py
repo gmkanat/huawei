@@ -10,10 +10,10 @@ from courier.permission import IsCourier
 from orders.serializers import OrderSerializer, AddressSerializer, OTPSerializer, OrderFullSerializer
 from orders.models import Order, OTP
 from users.models import User
-from utils.services import send_sms, generate_otp, get_phone
+from utils.services import send_sms, generate_otp, get_phone, get_longitude_longitude, get_data
 from django.utils import timezone
 from datetime import timedelta
-from .services import validate_order
+from .services import validate_order, calc_price
 
 
 class AddressViewSet(viewsets.mixins.CreateModelMixin,
@@ -32,6 +32,13 @@ class OrderViewSet(viewsets.mixins.CreateModelMixin,
         if self.action == 'create':
             return OrderSerializer
         return OrderFullSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
+        calc_price(instance)
+        return Response(OrderFullSerializer(instance).data)
 
     @extend_schema(
         parameters=[

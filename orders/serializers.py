@@ -7,6 +7,23 @@ from .models import Order
 from utils.models import Address
 
 
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = [
+            'id',
+            'oblast',
+            'city',
+            'street',
+            'house_number',
+            'apartment',
+            'entrance',
+            'floor',
+            'housing',
+            'residential_complex',
+        ]
+
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
@@ -37,24 +54,8 @@ class OrderFullSerializer(serializers.ModelSerializer):
             'con_id',
             'client_iin',
             'taker_iin',
+            'price',
             'status',
-        ]
-
-
-class AddressSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Address
-        fields = [
-            'id',
-            'oblast',
-            'city',
-            'street',
-            'house_number',
-            'apartment',
-            'entrance',
-            'floor',
-            'housing',
-            'residential_complex',
         ]
 
 

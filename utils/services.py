@@ -94,12 +94,11 @@ def generate_otp():
 def get_data(A, B):
     url = "https://maps.googleapis.com/maps/api/distancematrix/json?"
     params = {
-        'origins': f'{A.latitude},{A.longitude}',
-        'destinations': f'{B.latitude},{B.longitude}',
+        'origins': f'{A[1]},{A[0]}',
+        'destinations': f'{B[1]},{B[0]}',
         'traffic_model': 'best_guess',
         'departure_time': 'now',
         'mode': 'driving',
-
     }
     API_KEY = 'AIzaSyD7s4PzstYghKQt9a6SkIbv8PkSzWIOhSQ'
     for key, value in params.items():
@@ -110,6 +109,7 @@ def get_data(A, B):
     headers = {}
 
     response = requests.request("GET", url, headers=headers, data=payload)
+
 
     return response.json()
 
