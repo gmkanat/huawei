@@ -1,7 +1,7 @@
 from .models import Order
 from rest_framework.response import Response
 from rest_framework import status
-from utils.services import  get_longitude_longitude, get_data
+from utils.services import get_longitude_longitude, get_data
 
 
 def validate_order(pk, cur_status: str, courier_id: int = None):
@@ -27,7 +27,7 @@ def calc_price(order):
         time_spent = data['rows'][0]['elements'][0]['duration']['text'].split(' ')[0]
         order.price = 400 + int(time_spent) * 65
         if last_order:
-            order.price -= last_order.price*0.1
+            order.price -= last_order.price * 0.1
             order.price = max(400, order.price)
         order.save()
     except Exception as e:

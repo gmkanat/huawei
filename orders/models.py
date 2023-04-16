@@ -67,7 +67,7 @@ class Order(TimeStampMixin, IsActiveMixin):
         verbose_name_plural = _('Orders')
 
     def __str__(self):
-        return f"{self.id}"
+        return f"{self.id} - {self.request_id} - {self.status}"
 
 
 class OrderHistory(TimeStampMixin, IsActiveMixin):

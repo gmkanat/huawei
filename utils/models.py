@@ -67,3 +67,9 @@ class Address(TimeStampMixin, IsActiveMixin):
         verbose_name=_('Additional info'),
     )
 
+    class Meta:
+        verbose_name = _('Address')
+        verbose_name_plural = _('Addresses')
+
+    def __str__(self):
+        return f"{self.id}"
